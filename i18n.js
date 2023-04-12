@@ -14,7 +14,7 @@ const resources = {
   pl: {
     translation: {
       EDIT: 'Edytuj',
-      AND_SAVE_TO_TEST_HMR: 'i zapisz żeby przetestować HMR',
+      AND_SAVE_TO_TEST_HMR: 'zapisz żeby przetestować HMR',
     },
   },
 }

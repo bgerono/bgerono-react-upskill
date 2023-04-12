@@ -10,7 +10,8 @@
     "dev": "vite",
     "lint": "eslint ./src",
     "lint-fix": "eslint ./src  --fix",
-    "format": "prettier --write ./src",
+    "lint-staged": "lint-staged",
+    "format": "prettier --ignore-unknown --write ./src",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "prepare": "husky install"
@@ -34,6 +35,7 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-react": "^7.32.2",
     "husky": "^8.0.0",
+    "lint-staged": "^13.2.1",
     "prettier": "^2.8.7",
     "typescript": "^4.9.3",
     "vite": "^4.2.0"

@@ -25,10 +25,9 @@ function App() {
           count is {count}
         </Button>
         <p>
-          {t('Edit')} <code>src/App.tsx</code> {t('AND_SAVE_TO_TEST_HMR')}
+          {t('Edit')} <code>src/App.tsx</code> {t('AND_SAVE_TO_TEST_HMR')} test
         </p>
       </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
     </div>
   )
 }
