@@ -1,14 +1,16 @@
-import React from 'react'
 import { Button, FormControl, MenuItem, Select, styled } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function Navbar() {
   const { t, i18n } = useTranslation()
-  const [language, setLanguage] = React.useState('en')
+  const [language, setLanguage] = useState('en')
   const changeLanguage = (lang: string) => {
     i18n.changeLanguage(lang)
     setLanguage(lang)
   }
+  const navigate = useNavigate()
 
   const NavbarCont = styled('div')`
     display: flex;
@@ -17,10 +19,22 @@ export default function Navbar() {
 
   return (
     <NavbarCont>
-      <Button variant="text" color="primary" href={`/invoices`}>
+      <Button
+        variant="text"
+        color="primary"
+        onClick={() => {
+          navigate(`/invoices`)
+        }}
+      >
         {t('INVOICES')}
       </Button>
-      <Button variant="text" color="primary" href={`/invoice/:id`}>
+      <Button
+        onClick={(id) => {
+          navigate(`/invoice/:${id}`)
+        }}
+        variant="text"
+        color="primary"
+      >
         {t('ADD_NEW')}
       </Button>
       <FormControl variant="standard" sx={{ minWidth: 100, paddingLeft: 2 }}>

@@ -9,19 +9,10 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material'
-import { Invoice } from '../models/invoice.model'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import { useTranslation } from 'react-i18next'
-
-export function createInvoice(
-  id: string,
-  amount: number | null,
-  created: string,
-  validUntil: string,
-): Invoice {
-  return { id, amount, created, validUntil }
-}
+import { createInvoice } from '../hooks/invoice.hooks'
 
 const rows = [
   createInvoice('1/2023', 159, '22/03/2022', '22/03/2022'),

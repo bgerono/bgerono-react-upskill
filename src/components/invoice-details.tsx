@@ -13,7 +13,7 @@ import {
 } from './invoice-details-styled'
 import InvoiceDetailsItem from './invoice-details-item'
 import { useTranslation } from 'react-i18next'
-import { createInvoice } from './invoices-list'
+import { createInvoice } from '../hooks/invoice.hooks'
 
 export default function InvoiceDetails() {
   const { t } = useTranslation()
