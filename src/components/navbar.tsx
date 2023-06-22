@@ -11,7 +11,6 @@ export default function Navbar() {
     setLanguage(lang)
   }
   const navigate = useNavigate()
-
   const NavbarCont = styled('div')`
     display: flex;
     flex-direction: row;

@@ -23,11 +23,11 @@ export default function InvoiceDetails() {
     numberInput.current?.focus()
   }, [])
 
-  function setValue() {
+  const setValue = () => {
     // console.log('------- set create date: ', newValue) // newValue: Dayjs
   }
 
-  function addItem() {
+  const addItem = () => {
     // event: React.MouseEvent<HTMLButtonElement>
     createInvoice('', null, '', '')
   }
