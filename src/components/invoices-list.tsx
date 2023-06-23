@@ -14,16 +14,16 @@ import EditIcon from '@mui/icons-material/Edit'
 import { useTranslation } from 'react-i18next'
 import { useInvoice } from '../hooks/invoice.hooks'
 
-const rows = [
-  useInvoice('1/2023', 159, '22/03/2022', '22/03/2022'),
-  useInvoice('21/02/2022', 237, '12/02/2022', '22/03/2022'),
-  useInvoice('F-45//20', 262, '2/3/2020', '22/03/2022'),
-  useInvoice('2/2023', 305, '22/03/2022', '22/03/2022'),
-  useInvoice('3/2034', 356, '22/03/2022', '22/03/2022'),
-]
-
 export default function InvoicesList() {
   const { t } = useTranslation()
+  const { createInvoice } = useInvoice()
+  const rows = [
+    createInvoice('1/2023', 159, '22/03/2022', '22/03/2022'),
+    createInvoice('21/02/2022', 237, '12/02/2022', '22/03/2022'),
+    createInvoice('F-45//20', 262, '2/3/2020', '22/03/2022'),
+    createInvoice('2/2023', 305, '22/03/2022', '22/03/2022'),
+    createInvoice('3/2034', 356, '22/03/2022', '22/03/2022'),
+  ]
 
   return (
     <TableContainer component={Paper}>

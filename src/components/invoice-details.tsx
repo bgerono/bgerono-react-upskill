@@ -18,6 +18,7 @@ import { useInvoice } from '../hooks/invoice.hooks'
 export default function InvoiceDetails() {
   const { t } = useTranslation()
   const numberInput = useRef<HTMLInputElement>(null)
+  const { createInvoice } = useInvoice()
 
   useEffect(() => {
     numberInput.current?.focus()
@@ -29,7 +30,7 @@ export default function InvoiceDetails() {
 
   const addItem = () => {
     // event: React.MouseEvent<HTMLButtonElement>
-    useInvoice('', null, '', '')
+    createInvoice('', null, '', '')
   }
 
   return (
