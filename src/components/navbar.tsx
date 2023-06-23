@@ -1,9 +1,9 @@
 import { Button, FormControl, MenuItem, Select, styled } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import React, { useState } from 'react'
+import React, { FC, ReactElement, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-export default function Navbar() {
+export const Navbar: FC = (): ReactElement => {
   const { t, i18n } = useTranslation()
   const [language, setLanguage] = useState('en')
   const changeLanguage = (lang: string) => {

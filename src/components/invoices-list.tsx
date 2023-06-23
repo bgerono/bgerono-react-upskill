@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC, ReactElement } from 'react'
 import {
   IconButton,
   Paper,
@@ -14,7 +14,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import { useTranslation } from 'react-i18next'
 import { useInvoice } from '../hooks/invoice.hooks'
 
-export default function InvoicesList() {
+export const InvoicesList: FC = (): ReactElement => {
   const { t } = useTranslation()
   const { createInvoice } = useInvoice()
   const rows = [

@@ -1,9 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom'
-import ErrorPage from '../error-page'
 import React from 'react'
-import InvoicesList from '../components/invoices-list'
 import App from '../app'
-import InvoiceDetails from '../components/invoice-details'
+import { InvoiceDetails } from '../components/invoice-details'
+import { ErrorPage } from '../error-page'
+import { InvoicesList } from '../components/invoices-list'
 
 export const router = createBrowserRouter([
   {

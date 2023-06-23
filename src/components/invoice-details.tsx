@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { FC, ReactElement, useEffect, useRef } from 'react'
 import { Button, TextField } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers'
 import {
@@ -11,11 +11,11 @@ import {
   Recipient,
   Sender,
 } from './invoice-details-styled'
-import InvoiceDetailsItem from './invoice-details-item'
 import { useTranslation } from 'react-i18next'
 import { useInvoice } from '../hooks/invoice.hooks'
+import { InvoiceDetailsItem } from './invoice-details-item'
 
-export default function InvoiceDetails() {
+export const InvoiceDetails: FC = (): ReactElement => {
   const { t } = useTranslation()
   const numberInput = useRef<HTMLInputElement>(null)
   const { createInvoice } = useInvoice()

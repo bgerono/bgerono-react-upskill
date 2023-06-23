@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { FC, ReactElement } from 'react'
 import { IconButton, TextField } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { InvoiceItem, InvoiceItemName, InvoiceItemOthers } from './invoice-details-styled'
 import { useTranslation } from 'react-i18next'
 
-export default function InvoiceDetailsItem() {
+export const InvoiceDetailsItem: FC = (): ReactElement => {
   const { t } = useTranslation()
 
   return (
