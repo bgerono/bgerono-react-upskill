@@ -1,6 +1,6 @@
 import { Invoice } from '../models/invoice.model'
 
-export const createInvoice = (
+export const useInvoice = (
   id: string,
   amount: number | null,
   created: string,

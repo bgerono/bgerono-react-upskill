@@ -12,14 +12,14 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import { useTranslation } from 'react-i18next'
-import { createInvoice } from '../hooks/invoice.hooks'
+import { useInvoice } from '../hooks/invoice.hooks'
 
 const rows = [
-  createInvoice('1/2023', 159, '22/03/2022', '22/03/2022'),
-  createInvoice('21/02/2022', 237, '12/02/2022', '22/03/2022'),
-  createInvoice('F-45//20', 262, '2/3/2020', '22/03/2022'),
-  createInvoice('2/2023', 305, '22/03/2022', '22/03/2022'),
-  createInvoice('3/2034', 356, '22/03/2022', '22/03/2022'),
+  useInvoice('1/2023', 159, '22/03/2022', '22/03/2022'),
+  useInvoice('21/02/2022', 237, '12/02/2022', '22/03/2022'),
+  useInvoice('F-45//20', 262, '2/3/2020', '22/03/2022'),
+  useInvoice('2/2023', 305, '22/03/2022', '22/03/2022'),
+  useInvoice('3/2034', 356, '22/03/2022', '22/03/2022'),
 ]
 
 export default function InvoicesList() {

@@ -13,7 +13,7 @@ import {
 } from './invoice-details-styled'
 import InvoiceDetailsItem from './invoice-details-item'
 import { useTranslation } from 'react-i18next'
-import { createInvoice } from '../hooks/invoice.hooks'
+import { useInvoice } from '../hooks/invoice.hooks'
 
 export default function InvoiceDetails() {
   const { t } = useTranslation()
@@ -29,7 +29,7 @@ export default function InvoiceDetails() {
 
   const addItem = () => {
     // event: React.MouseEvent<HTMLButtonElement>
-    createInvoice('', null, '', '')
+    useInvoice('', null, '', '')
   }
 
   return (
