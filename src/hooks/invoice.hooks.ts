@@ -1,14 +1,29 @@
-import { Invoice } from '../models/invoice.model'
+import { IInvoice, IInvoiceItem } from '../models/invoice.model'
 
 export const useInvoice = () => {
   const createInvoice = (
     id: string,
-    amount: number | null,
-    created: string,
+    createdAt: string,
+    name: string,
     validUntil: string,
-  ): Invoice => {
-    return { id, amount, created, validUntil }
+    items?: IInvoiceItem[],
+  ): IInvoice => {
+    return { id, createdAt, name, validUntil, items }
   }
 
-  return { createInvoice }
+  const createEmptyInvoice = (): IInvoice => createInvoice('', '', '', '', [])
+
+  const createEmptyInvoiceItem = (): IInvoiceItem => {
+    return { id: '', name: '', tax: undefined, price: undefined, unit: '', amount: undefined }
+  }
+
+  const countInvoiceAmount = (items: IInvoiceItem[] | undefined) => {
+    if (!items) {
+      return 0
+    }
+
+    return items.reduce((item, next) => item + (next.amount || 0), 0)
+  }
+
+  return { createInvoice, countInvoiceAmount, createEmptyInvoice, createEmptyInvoiceItem }
 }
