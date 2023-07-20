@@ -22,7 +22,7 @@ export const InvoiceListItem: FC<IInvoiceListItemProps> = (invoiceListItemProps)
   const [isLoading, setLoading] = useState(false)
   const onRemove = () => {
     setLoading(true)
-    removeMutation.mutate(invoice.id, {
+    removeMutation.mutate(invoice.id as string, {
       onSuccess: () =>
         refetchList().then(() => {
           setLoading(false)
@@ -46,7 +46,6 @@ export const InvoiceListItem: FC<IInvoiceListItemProps> = (invoiceListItemProps)
             size="small"
             disabled={isLoading}
             onClick={() => {
-              console.log('edit invoice:id: ', invoice.id)
               navigate(`/invoice/${invoice.id}`)
             }}
           >

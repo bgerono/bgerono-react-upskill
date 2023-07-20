@@ -8,6 +8,7 @@
   "CITY": "City",
   "COMPANY_NAME": "Company name",
   "CREATED": "Created",
+  "CREATED_AT": "Created at",
   "INVOICES": "Invoices",
   "LANGUAGE": "Language",
   "NAME": "Name",
@@ -20,5 +21,6 @@
   "STREET": "Street",
   "TAX": "Tax",
   "UNIT": "Unit",
-  "VALID_UNTIL": "Valid until"
+  "VALID_UNTIL": "Valid until",
+  "FIELD_IS_REQUIRE": "Field is required"
 }

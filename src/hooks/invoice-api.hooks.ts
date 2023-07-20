@@ -33,6 +33,14 @@ export const useInvoiceApi = () => {
     })
   }
 
+  const saveNewInvoice = () => {
+    return useMutation({
+      mutationFn: async (invoice: IInvoice) => {
+        await axios.post(`${apiUrl}invoices`, invoice)
+      },
+    })
+  }
+
   const updateInvoiceById = () => {
     return useMutation({
       mutationFn: async (invoice: IInvoice) => {
@@ -41,5 +49,5 @@ export const useInvoiceApi = () => {
     })
   }
 
-  return { getInvoices, removeInvoiceById, getInvoiceById, updateInvoiceById }
+  return { getInvoices, removeInvoiceById, getInvoiceById, updateInvoiceById, saveNewInvoice }
 }

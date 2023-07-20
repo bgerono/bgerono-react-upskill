@@ -10,20 +10,24 @@ export const InvoiceFormTopRow = styled('div')`
   padding: 10px;
 `
 export const InvoiceFormDateRow = styled('div')`
-  padding: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
 `
 export const InvoiceOthersRow = styled('div')`
   display: flex;
   padding: 10px;
   gap: 10px;
 `
-export const Recipient = styled('div')`
+export const Sender = styled('div')`
   width: 100%;
   display: flex;
   flex-direction: column;
   font-size: x-large;
 `
-export const Sender = styled('div')`
+export const InvoiceCompany = styled('div')`
   width: 100%;
   display: flex;
   flex-direction: column;

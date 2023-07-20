@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from 'react'
+import React, { FC, ReactElement, useContext, useEffect } from 'react'
 import {
   Paper,
   Table,
@@ -13,11 +13,17 @@ import { useInvoiceApi } from '../hooks/invoice-api.hooks'
 import { UseQueryResult } from '@tanstack/react-query'
 import { IInvoice } from '../models/invoice.model'
 import { InvoiceListItem } from './invoice-list-item/invoice-list-item'
+import { ILoaderContext, LoaderContext } from '../context/LoaderContex'
 
 export const InvoicesList: FC = (): ReactElement => {
   const { t } = useTranslation()
   const { getInvoices } = useInvoiceApi()
   const invoiceListQuery: UseQueryResult<IInvoice[]> = getInvoices()
+  const { setLoader } = useContext(LoaderContext) as ILoaderContext
+
+  useEffect(() => {
+    setLoader(!!invoiceListQuery.isLoading)
+  }, [invoiceListQuery.isLoading])
 
   return (
     <TableContainer component={Paper}>

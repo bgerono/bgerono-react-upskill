@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, Navigate } from 'react-router-dom'
 import React from 'react'
 import App from '../app'
 import { InvoiceDetails } from '../components/invoice-details/invoice-details'
@@ -10,9 +10,15 @@ export const router = createBrowserRouter([
     path: '/',
     element: <App />,
     children: [
-      { path: 'invoices', element: <InvoicesList /> },
-      { path: 'invoice/:invoiceId', element: <InvoiceDetails /> },
-      { path: 'invoice', element: <InvoiceDetails /> },
+      {
+        index: true,
+        element: <Navigate to="/invoices" replace />,
+      },
+      {
+        path: 'invoices',
+        element: <InvoicesList />,
+      },
+      { path: 'invoice/:invoiceId?', element: <InvoiceDetails /> },
     ],
     errorElement: <ErrorPage />,
   },

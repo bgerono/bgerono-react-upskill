@@ -1,6 +1,5 @@
-import React, { FC, ReactElement, useEffect, useRef } from 'react'
-import { Button, CircularProgress, TextField } from '@mui/material'
-import { DatePicker } from '@mui/x-date-pickers'
+import React, { FC, ReactElement, useContext, useEffect } from 'react'
+import { Button, TextField } from '@mui/material'
 import {
   InvoiceForm,
   InvoiceFormDateRow,
@@ -8,8 +7,6 @@ import {
   InvoiceItemButton,
   InvoiceItems,
   InvoiceOthersRow,
-  Recipient,
-  Sender,
 } from './invoice-details-styled'
 import { useTranslation } from 'react-i18next'
 import { InvoiceDetailsItem } from './invoice-details-item'
@@ -17,60 +14,82 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useInvoiceApi } from '../../hooks/invoice-api.hooks'
 import { UseQueryResult } from '@tanstack/react-query'
 import { IInvoice, IInvoiceItem } from '../../models/invoice.model'
-import { useInvoice } from '../../hooks/invoice.hooks'
+import { CompanyType, useInvoice } from '../../hooks/invoice.hooks'
 import { FormProvider, SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
+import { InvoiceDetailsCompany } from './invoice-details-company'
+import { InvoiceDetailsDatepicker } from './invoice-details-datepicker'
+import { ILoaderContext, LoaderContext } from '../../context/LoaderContex'
 
 export const InvoiceDetails: FC = (): ReactElement => {
-  const { invoiceId } = useParams()
   const { t } = useTranslation()
-  const { getInvoiceById, updateInvoiceById } = useInvoiceApi()
+  const { invoiceId } = useParams()
+  const { getInvoiceById, updateInvoiceById, saveNewInvoice } = useInvoiceApi()
   const { createEmptyInvoice, createEmptyInvoiceItem } = useInvoice()
+  const { setLoader } = useContext(LoaderContext) as ILoaderContext
   const navigate = useNavigate()
-  const invoiceQuery: UseQueryResult<IInvoice> = getInvoiceById(invoiceId as string)
-  const nameInput = useRef<HTMLInputElement>(null)
-  // const [invoice, setInvoice] = useState<IInvoice>(createEmptyInvoice())
-  const methods = useForm({ defaultValues: createEmptyInvoice() })
-  const { formState, control, register, handleSubmit } = methods
+  const invoiceQuery: UseQueryResult<IInvoice> | undefined = invoiceId
+    ? getInvoiceById(invoiceId as string)
+    : undefined
+  const useFormMethods = useForm({ defaultValues: createEmptyInvoice() })
+  const { setFocus, formState, control, register, handleSubmit } = useFormMethods
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'items',
   })
-  const { isDirty } = formState
+  const { isDirty, errors } = formState
+  const updateMutation = updateInvoiceById()
+  const saveMutation = saveNewInvoice()
 
   useEffect(() => {
-    nameInput?.current?.focus()
+    setFocus('name')
+  }, [setFocus])
 
-    if (invoiceQuery.status === 'success') {
-      // setInvoice(invoiceQuery.data)
-      methods.reset({ ...invoiceQuery.data })
+  useEffect(() => {
+    if (invoiceQuery?.status === 'success') {
+      useFormMethods.reset({ ...invoiceQuery?.data })
     }
-  }, [invoiceQuery.status, invoiceQuery.data])
+  }, [invoiceQuery?.status, invoiceQuery?.data])
 
-  if (invoiceQuery.isLoading) {
-    return <CircularProgress />
-  }
-
-  // const updateMutation = updateInvoiceById()*/
+  useEffect(() => {
+    setLoader(!!invoiceQuery?.isLoading)
+  }, [invoiceQuery?.isLoading])
 
   const onSubmit: SubmitHandler<IInvoice> = (invoiceData: IInvoice) => {
-    console.log('!!!!!!!!!', invoiceData)
-    // updateMutation.mutate(invoiceData, {
-    //   onSuccess: () => console.log('!!!!!!!!!', invoiceData),
-    // })
+    if (!invoiceData?.id) {
+      saveMutation.mutate(invoiceData, {
+        onSuccess: (data, returnedInvoice) => {
+          useFormMethods.reset({ ...returnedInvoice })
+        },
+      })
+    } else {
+      updateMutation.mutate(invoiceData, {
+        onSuccess: (data, invoice) => {
+          useFormMethods.reset({ ...invoice })
+        },
+      })
+    }
   }
 
   return (
-    <FormProvider {...methods}>
+    <FormProvider {...useFormMethods}>
       <form>
         <InvoiceForm>
           <InvoiceFormTopRow>
             <TextField
+              required
               sx={{ width: '50%' }}
               id="standard-basic"
-              inputRef={nameInput}
+              error={!!errors?.name}
+              helperText={errors?.name ? errors?.name?.message : ''}
               label={t('NAME')}
               variant="standard"
-              {...register('name')}
+              {...register('name', {
+                required: t('FIELD_IS_REQUIRE') as string,
+                minLength: {
+                  value: 4,
+                  message: 'Field is min length 4.',
+                },
+              })}
             />
             <div>
               <Button
@@ -80,69 +99,38 @@ export const InvoiceDetails: FC = (): ReactElement => {
               >
                 {t('CANCEL')}
               </Button>
-              <Button sx={{ margin: '5px' }} variant="contained" onClick={handleSubmit(onSubmit)}>
+              <Button
+                sx={{ margin: '5px' }}
+                variant="contained"
+                disabled={!isDirty}
+                onClick={handleSubmit(onSubmit)}
+              >
                 {t('SAVE')}
               </Button>
             </div>
           </InvoiceFormTopRow>
           <InvoiceFormDateRow>
-            <DatePicker label="Create date" />
-            <DatePicker label="Valid until date" />
+            <InvoiceDetailsDatepicker
+              controlName={'createdAt'}
+              label={'CREATED_AT'}
+            ></InvoiceDetailsDatepicker>
+            <InvoiceDetailsDatepicker
+              controlName={'validUntil'}
+              label={'VALID_UNTIL'}
+            ></InvoiceDetailsDatepicker>
           </InvoiceFormDateRow>
           <InvoiceOthersRow>
-            <Recipient>
-              <div>{t('RECIPIENT')}</div>
-              <TextField
-                label={t('COMPANY_NAME')}
-                variant="standard"
-                {...register('recipient.companyName')}
-              />
-              <TextField label={t('CITY')} variant="standard" {...register('recipient.city')} />
-              <TextField label={t('STREET')} variant="standard" {...register('recipient.street')} />
-              <TextField
-                label={t('POSTCODE')}
-                variant="standard"
-                {...register('recipient.postcode')}
-              />
-              <TextField label="NIP" variant="standard" {...register('recipient.nip')} />
-              <TextField label="E-mail" variant="standard" {...register('recipient.email')} />
-              <TextField
-                label={t('BANK_ACCOUNT')}
-                variant="standard"
-                {...register('recipient.bankAccount')}
-              />
-            </Recipient>
-            <Sender>
-              <div>{t('SENDER')}</div>
-              <TextField
-                label={t('COMPANY_NAME')}
-                variant="standard"
-                {...register('sender.companyName')}
-              />
-              <TextField label={t('CITY')} variant="standard" {...register('sender.city')} />
-              <TextField label={t('STREET')} variant="standard" {...register('sender.street')} />
-              <TextField
-                label={t('POSTCODE')}
-                variant="standard"
-                {...register('sender.postcode')}
-              />
-              <TextField label="NIP" variant="standard" {...register('sender.nip')} />
-              <TextField label="E-mail" variant="standard" {...register('sender.email')} />
-              <TextField
-                label={t('BANK_ACCOUNT')}
-                variant="standard"
-                {...register('sender.bankAccount')}
-              />
-            </Sender>
+            <InvoiceDetailsCompany companyType={CompanyType.recipient}></InvoiceDetailsCompany>
+            <InvoiceDetailsCompany companyType={CompanyType.sender}></InvoiceDetailsCompany>
           </InvoiceOthersRow>
           <InvoiceItems>
             {fields?.map((invoiceItem: IInvoiceItem, index) => {
               return (
                 <InvoiceDetailsItem
-                  key={invoiceItem.id}
+                  key={`${invoiceItem?.id}${index}`}
                   invoiceItemIndex={index}
                   onInvoiceItemRemove={() => remove(index)}
-                  {...register(`items.${index}`)}
+                  {...register(`items.${index}` as const)}
                 ></InvoiceDetailsItem>
               )
             })}

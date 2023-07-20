@@ -1,41 +1,29 @@
 export interface IInvoice {
-  id: string
-  items: IInvoiceItem[] | undefined
+  id?: string
   name: string
   createdAt: string
   validUntil: string
-  recipient?: InvoiceRecipient
-  sender?: InvoiceSender
+  recipient: IInvoiceCompany | undefined
+  sender: IInvoiceCompany | undefined
+  items: IInvoiceItem[]
 }
 
 export interface IInvoiceItem {
-  id: string
+  id?: string
   name: string
-  amount: number | undefined
+  tax: number | null
+  price: number | null
   unit: string
-  tax: number | undefined
-  price: number | undefined
+  amount: number | null
 }
 
-export interface InvoiceRecipient {
-  bankAccount: number
+export interface IInvoiceCompany {
+  bankAccount: string
   city: string
   companyName: string
   email: string
-  id: string
-  nip: number
-  phone: string
-  postcode: string
-  street: string
-}
-
-export interface InvoiceSender {
-  bankAccount: number
-  city: string
-  companyName: string
-  email: string
-  id: string
-  nip: number
+  id?: string
+  nip: string
   phone: string
   postcode: string
   street: string
