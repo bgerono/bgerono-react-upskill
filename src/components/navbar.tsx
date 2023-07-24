@@ -28,8 +28,8 @@ export const Navbar: FC = (): ReactElement => {
         {t('INVOICES')}
       </Button>
       <Button
-        onClick={(id) => {
-          navigate(`/invoice/:${id}`)
+        onClick={() => {
+          navigate(`/invoice`)
         }}
         variant="text"
         color="primary"

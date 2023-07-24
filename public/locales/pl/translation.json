@@ -8,6 +8,7 @@
   "CITY": "Miasto",
   "COMPANY_NAME": "Nazwa firmy",
   "CREATED": "Utworzona",
+  "CREATED_AT": "Data utworznia",
   "INVOICES": "Faktury",
   "LANGUAGE": "Język",
   "NAME": "Nazwa",
@@ -20,5 +21,6 @@
   "STREET": "Ulica",
   "TAX": "Podatek",
   "UNIT": "Jednostka",
-  "VALID_UNTIL": "Ważna do"
+  "VALID_UNTIL": "Ważna do",
+  "FIELD_IS_REQUIRE": "Pole jest wymagane"
 }
