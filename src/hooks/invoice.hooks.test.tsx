@@ -7,6 +7,11 @@ import { useInvoice } from './invoice.hooks'
  */
 describe('useInvoice', () => {
   const { countInvoiceAmount } = useInvoice()
+  it('countInvoiceAmount: should return 0 when invoice collection is undefined', () => {
+    const result = countInvoiceAmount(undefined)
+
+    expect(result).toEqual(0)
+  })
 
   it('countInvoiceAmount: should return 0 when invoice collection is empty', () => {
     const result = countInvoiceAmount([])

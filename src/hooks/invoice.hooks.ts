@@ -1,14 +1,5 @@
 import { IInvoice, IInvoiceItem } from '../models/invoice.model'
 
-export const enum CompanyType {
-  // eslint-disable-next-line no-unused-vars
-  recipient = 'recipient',
-  // eslint-disable-next-line no-unused-vars
-  sender = 'sender',
-}
-
-export const InvoiceDateFormat = 'YYYY-MM-DD'
-
 export const newInvoiceMock: IInvoice = {
   createdAt: '2023-07-17T22:00:00.000Z',
   items: [

@@ -1,12 +1,13 @@
-import React, { FC, useMemo, useState } from 'react'
+import React, { FC, useContext, useMemo, useState } from 'react'
 import { IconButton, TableCell, TableRow } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { IInvoice } from '../../models/invoice.model'
+import { IInvoice, MsgTypeEnum } from '../../models/invoice.model'
 import { useInvoice } from '../../hooks/invoice.hooks'
 import { useInvoiceApi } from '../../hooks/invoice-api.hooks'
 import { QueryObserverResult } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
+import { IToastMsgContext, ToastMsgContext } from '../../context/toast-msg-context'
 
 interface IInvoiceListItemProps {
   invoice: IInvoice
@@ -18,6 +19,7 @@ export const InvoiceListItem: FC<IInvoiceListItemProps> = (invoiceListItemProps)
   const { countInvoiceAmount } = useInvoice()
   const navigate = useNavigate()
   const removeMutation = removeInvoiceById()
+  const { dispatch } = useContext(ToastMsgContext) as IToastMsgContext
   const { invoice, refetchList } = invoiceListItemProps
   const [isLoading, setLoading] = useState(false)
   const onRemove = () => {
@@ -25,6 +27,7 @@ export const InvoiceListItem: FC<IInvoiceListItemProps> = (invoiceListItemProps)
     removeMutation.mutate(invoice.id as string, {
       onSuccess: () =>
         refetchList().then(() => {
+          dispatch({ type: MsgTypeEnum.success, msg: 'Invoice has been removed' })
           setLoading(false)
         }),
     })
