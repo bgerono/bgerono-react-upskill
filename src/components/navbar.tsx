@@ -7,15 +7,13 @@ export const Navbar: FC = (): ReactElement => {
   const { t, i18n } = useTranslation()
   const [language, setLanguage] = useState('en')
   const changeLanguage = (lang: string) => {
-    i18n.changeLanguage(lang)
-    setLanguage(lang)
+    i18n.changeLanguage(lang).then(() => setLanguage(lang))
   }
   const navigate = useNavigate()
   const NavbarCont = styled('div')`
     display: flex;
     flex-direction: row;
   `
-
   return (
     <NavbarCont>
       <Button
@@ -29,7 +27,7 @@ export const Navbar: FC = (): ReactElement => {
       </Button>
       <Button
         onClick={() => {
-          navigate(`/invoice`)
+          navigate(`/invoice/new`)
         }}
         variant="text"
         color="primary"
@@ -38,6 +36,7 @@ export const Navbar: FC = (): ReactElement => {
       </Button>
       <FormControl variant="standard" sx={{ minWidth: 100, paddingLeft: 2 }}>
         <Select
+          data-testid="select-lang"
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={language}

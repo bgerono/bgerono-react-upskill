@@ -14,7 +14,8 @@
     "format": "prettier --ignore-unknown --write ./src",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": "vitest"
   },
   "dependencies": {
     "@mui/icons-material": "^5.14.1",
@@ -32,6 +33,9 @@
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^4.29.9",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^14.0.0",
+    "@types/jest": "^29.5.3",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@types/react-router-dom": "^5.3.3",
@@ -45,9 +49,12 @@
     "husky": "^8.0.0",
     "i18next-browser-languagedetector": "^7.0.1",
     "i18next-http-backend": "^2.2.0",
+    "jest-environment-jsdom": "^29.6.1",
+    "jsdom": "^22.1.0",
     "lint-staged": "^13.2.1",
     "prettier": "^2.8.7",
     "typescript": "^4.9.3",
-    "vite": "^4.2.0"
+    "vite": "^4.2.0",
+    "vitest": "^0.33.0"
   }
 }

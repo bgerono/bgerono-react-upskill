@@ -22,7 +22,7 @@ export const InvoicesList: FC = (): ReactElement => {
   const { setLoader } = useContext(LoaderContext) as ILoaderContext
 
   useEffect(() => {
-    setLoader(!!invoiceListQuery.isLoading)
+    setLoader(invoiceListQuery.isLoading)
   }, [invoiceListQuery.isLoading])
 
   return (

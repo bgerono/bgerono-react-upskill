@@ -18,7 +18,14 @@ export const router = createBrowserRouter([
         path: 'invoices',
         element: <InvoicesList />,
       },
-      { path: 'invoice/:invoiceId?', element: <InvoiceDetails /> },
+      {
+        path: 'invoice/:invoiceId?',
+        element: <InvoiceDetails key="edit" />,
+      },
+      {
+        path: 'invoice/new',
+        element: <InvoiceDetails key="new" />,
+      },
     ],
     errorElement: <ErrorPage />,
   },

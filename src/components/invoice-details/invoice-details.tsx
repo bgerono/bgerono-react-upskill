@@ -130,7 +130,6 @@ export const InvoiceDetails: FC = (): ReactElement => {
                   key={`${invoiceItem?.id}${index}`}
                   invoiceItemIndex={index}
                   onInvoiceItemRemove={() => remove(index)}
-                  {...register(`items.${index}` as const)}
                 ></InvoiceDetailsItem>
               )
             })}

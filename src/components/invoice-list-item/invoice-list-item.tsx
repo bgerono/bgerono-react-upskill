@@ -38,7 +38,9 @@ export const InvoiceListItem: FC<IInvoiceListItemProps> = (invoiceListItemProps)
         </TableCell>
         <TableCell align="right">{invoice.createdAt}</TableCell>
         <TableCell align="right">{invoice.validUntil}</TableCell>
-        <TableCell align="right">{countInvoiceAmount(invoice.items)}</TableCell>
+        <TableCell data-testid="list-item-amount" align="right">
+          {countInvoiceAmount(invoice.items)}
+        </TableCell>
         <TableCell align="right">
           <IconButton
             color="secondary"
@@ -52,6 +54,7 @@ export const InvoiceListItem: FC<IInvoiceListItemProps> = (invoiceListItemProps)
             <EditIcon />
           </IconButton>
           <IconButton
+            data-testid="list-item-button-remove"
             color="secondary"
             aria-label="delete invoice"
             size="small"

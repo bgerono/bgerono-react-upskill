@@ -7,7 +7,11 @@ interface IBackdrop {
 
 export const BackdropLoader: FC<IBackdrop> = ({ isOpen }) => {
   return (
-    <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={isOpen}>
+    <Backdrop
+      data-testid="backdrop"
+      sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      open={isOpen}
+    >
       <CircularProgress color="inherit" />
     </Backdrop>
   )
