@@ -15,6 +15,16 @@ vi.mock('react-router-dom', async () => {
 
   return { ...actual, useNavigate: () => mockedUsedNavigate }
 })
+vi.mock('react', async () => {
+  const actual = await vi.importActual('react')
+
+  return { ...actual, useContext: () => ({ state: {}, dispatch: vi.fn() }) }
+})
+vi.mock('../../hooks/invoice-api.hooks', () => ({
+  useInvoiceApi: vi
+    .fn()
+    .mockReturnValue({ removeInvoiceById: vi.fn().mockReturnValue({ mutate: vi.fn() }) }),
+}))
 vi.mock('../../hooks/invoice-api.hooks', () => ({
   useInvoiceApi: vi
     .fn()
@@ -28,6 +38,10 @@ const refetchSpy = vi.fn().mockReturnValue(invoicePromise)
  * @vitest-environment jsdom
  */
 describe('InvoiceListItem', () => {
+  beforeEach(() => {
+    // vi.spyOn(useContext(), '')
+  })
+
   it('should display invoice fields with data', () => {
     const { getByTestId, getByText } = render(
       <InvoiceListItem invoice={{ id: '123asd', ...newInvoiceMock }} refetchList={refetchSpy} />,
