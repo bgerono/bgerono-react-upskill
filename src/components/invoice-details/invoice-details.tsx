@@ -13,12 +13,14 @@ import { InvoiceDetailsItem } from './invoice-details-item'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useInvoiceApi } from '../../hooks/invoice-api.hooks'
 import { UseQueryResult } from '@tanstack/react-query'
-import { IInvoice, IInvoiceItem } from '../../models/invoice.model'
-import { CompanyType, useInvoice } from '../../hooks/invoice.hooks'
+import { CompanyType, IInvoice, IInvoiceItem, MsgTypeEnum } from '../../models/invoice.model'
+import { useInvoice } from '../../hooks/invoice.hooks'
 import { FormProvider, SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 import { InvoiceDetailsCompany } from './invoice-details-company'
 import { InvoiceDetailsDatepicker } from './invoice-details-datepicker'
-import { ILoaderContext, LoaderContext } from '../../context/LoaderContex'
+import { ILoaderContext, LoaderContext } from '../../context/loader-context'
+import { IToastMsgContext, ToastMsgContext } from '../../context/toast-msg-context'
+import { AxiosError } from 'axios'
 
 export const InvoiceDetails: FC = (): ReactElement => {
   const { t } = useTranslation()
@@ -26,6 +28,8 @@ export const InvoiceDetails: FC = (): ReactElement => {
   const { getInvoiceById, updateInvoiceById, saveNewInvoice } = useInvoiceApi()
   const { createEmptyInvoice, createEmptyInvoiceItem } = useInvoice()
   const { setLoader } = useContext(LoaderContext) as ILoaderContext
+  const { dispatch } = useContext(ToastMsgContext) as IToastMsgContext
+
   const navigate = useNavigate()
   const invoiceQuery: UseQueryResult<IInvoice> | undefined = invoiceId
     ? getInvoiceById(invoiceId as string)
@@ -59,12 +63,17 @@ export const InvoiceDetails: FC = (): ReactElement => {
       saveMutation.mutate(invoiceData, {
         onSuccess: (data, returnedInvoice) => {
           useFormMethods.reset({ ...returnedInvoice })
+          dispatch({ type: MsgTypeEnum.success, msg: 'New invoice has been saved' })
+        },
+        onError: (data: AxiosError) => {
+          dispatch({ type: MsgTypeEnum.error, msg: data.message })
         },
       })
     } else {
       updateMutation.mutate(invoiceData, {
         onSuccess: (data, invoice) => {
           useFormMethods.reset({ ...invoice })
+          dispatch({ type: MsgTypeEnum.success, msg: 'Invoice has been updated' })
         },
       })
     }
@@ -130,7 +139,6 @@ export const InvoiceDetails: FC = (): ReactElement => {
                   key={`${invoiceItem?.id}${index}`}
                   invoiceItemIndex={index}
                   onInvoiceItemRemove={() => remove(index)}
-                  {...register(`items.${index}` as const)}
                 ></InvoiceDetailsItem>
               )
             })}

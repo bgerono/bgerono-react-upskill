@@ -1,8 +1,7 @@
 import React, { FC, ReactElement } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { InvoiceDateFormat } from '../../hooks/invoice.hooks'
-import { IInvoice } from '../../models/invoice.model'
+import { IInvoice, InvoiceDateFormat } from '../../models/invoice.model'
 import { DatePicker } from '@mui/x-date-pickers'
 import dayjs from 'dayjs'
 

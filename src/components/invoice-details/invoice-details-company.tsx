@@ -2,9 +2,8 @@ import React, { FC, ReactElement, useEffect } from 'react'
 import { TextField } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { CompanyType } from '../../hooks/invoice.hooks'
 import { InvoiceCompany } from './invoice-details-styled'
-import { IInvoice } from '../../models/invoice.model'
+import { CompanyType, IInvoice } from '../../models/invoice.model'
 
 interface IInvoiceDetailsCompanyProps {
   companyType: CompanyType

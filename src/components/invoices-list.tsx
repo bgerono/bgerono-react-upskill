@@ -13,7 +13,7 @@ import { useInvoiceApi } from '../hooks/invoice-api.hooks'
 import { UseQueryResult } from '@tanstack/react-query'
 import { IInvoice } from '../models/invoice.model'
 import { InvoiceListItem } from './invoice-list-item/invoice-list-item'
-import { ILoaderContext, LoaderContext } from '../context/LoaderContex'
+import { ILoaderContext, LoaderContext } from '../context/loader-context'
 
 export const InvoicesList: FC = (): ReactElement => {
   const { t } = useTranslation()
@@ -22,7 +22,7 @@ export const InvoicesList: FC = (): ReactElement => {
   const { setLoader } = useContext(LoaderContext) as ILoaderContext
 
   useEffect(() => {
-    setLoader(!!invoiceListQuery.isLoading)
+    setLoader(invoiceListQuery.isLoading)
   }, [invoiceListQuery.isLoading])
 
   return (
